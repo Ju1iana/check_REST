@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--   <script src="/scripts/index.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var myData = JSON.parse($.ajax({
+            url: 'books/getAll',
+            async: false
+        }).responseText);
+
+        console.log(myData);
+
+        let table = "<table border='1'>";
+        for (let i = 0; i < myData.length; i++) {
+            if (myData[i].hasOwnProperty('id') && myData[i].hasOwnProperty('name') && myData[i].hasOwnProperty('cost') && myData[i].hasOwnProperty('warehouse') && myData[i].hasOwnProperty('quantity')) {
+                table = table + "<tr><td>" + myData[i].id + "</td><td>" + myData[i].name + "</td><td>" + myData[i].cost + "</td><td>" + myData[i].warehouse + "</td><td>" + myData[i].quantity + "</td></tr>";
+            }
+        }
+        table = table + "</table>";
+
+        $("#output").html(table);
+    });
+
+    /*const buttonGetAllBooks = document.getElementById('myButton');*/
+</script>
+<body>
+
+<!--<button id="myButton">Получить все книги</button>-->
+
+<p>Ваши книги:</p>
+<div id="output"></div>
+
+<p>Marsik <3</p>
+</body>
+</html>
