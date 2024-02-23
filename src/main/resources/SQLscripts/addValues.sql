@@ -78,3 +78,8 @@ VALUES
      ('19-01-2022', 4, 14, 8, 2, 7120),
      ('19-01-2022', 1, 13, 10, 1, 1000),
      ('10-03-2022', 3, 9, 11, 1, 9000);
+
+
+INSERT INTO books (book_name, book_cost, book_warehouse, book_quantity)
+VALUES
+    ('11', 11000, '11', 30660)

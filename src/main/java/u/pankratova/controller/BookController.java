@@ -49,7 +49,6 @@ public class BookController {
        return bookService.getAllBooks();
     }
 
-    @Operation(summary = "Get book by id")
     @ResponseStatus(code = HttpStatus.FOUND)
     @GetMapping("/getBookFirst")
     public Book getBookFirst() {

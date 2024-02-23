@@ -10,32 +10,72 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        var myData = JSON.parse($.ajax({
-            url: 'books/getAll',
-            async: false
-        }).responseText);
+        $("#myButton").click(function () {
 
-        console.log(myData);
+            var myData = JSON.parse($.ajax({
+                url: 'books/getAll',
+                async: false
+            }).responseText);
 
-        let table = "<table border='1'>";
-        for (let i = 0; i < myData.length; i++) {
-            if (myData[i].hasOwnProperty('id') && myData[i].hasOwnProperty('name') && myData[i].hasOwnProperty('cost') && myData[i].hasOwnProperty('warehouse') && myData[i].hasOwnProperty('quantity')) {
-                table = table + "<tr><td>" + myData[i].id + "</td><td>" + myData[i].name + "</td><td>" + myData[i].cost + "</td><td>" + myData[i].warehouse + "</td><td>" + myData[i].quantity + "</td></tr>";
+            console.log(myData);
+
+            let table = "<table border='1'>";
+            for (let i = 0; i < myData.length; i++) {
+                if (myData[i].hasOwnProperty('id') && myData[i].hasOwnProperty('name') && myData[i].hasOwnProperty('cost') && myData[i].hasOwnProperty('warehouse') && myData[i].hasOwnProperty('quantity')) {
+                    table = table + "<tr><td>" + myData[i].id + "</td><td>" + myData[i].name + "</td><td>" + myData[i].cost + "</td><td>" + myData[i].warehouse + "</td><td>" + myData[i].quantity + "</td></tr>";
+                }
             }
-        }
-        table = table + "</table>";
+            table = table + "</table>";
 
-        $("#output").html(table);
+            $("#output").html(table);
+        });
+
+        $("#myButton2").click(function () {
+
+            var myData = JSON.parse($.ajax({
+                url: 'books/getBookFirst',
+                async: false
+            }).responseText);
+
+            console.log(myData);
+
+            $("#output").html(myData.id + " " + myData.name + " " + myData.cost + " " + myData.warehouse + " " + myData.quantity);
+        });
     });
 
-    /*const buttonGetAllBooks = document.getElementById('myButton');*/
+    $("#searchButton").click(function () {
+        var bookId = $("#bookId").val();
+
+        $.ajax({
+            url: 'books/getById?id=' + bookId,
+            async: false,
+            dataType: 'json',
+            success: function (myDataById) {
+                console.log(myDataById);
+
+                $("#result").html(myDataById.id + " " + myDataById.name + " " + myDataById.cost + " " + myDataById.warehouse + " " + myDataById.quantity);
+            },
+            error: function (error) {
+                console.error('Ошибка при отправке запроса:', error);
+            }
+        });
+    });
+
 </script>
 <body>
 
-<!--<button id="myButton">Получить все книги</button>-->
+<button id="myButton">Получить все книги</button>
+<button id="myButton2">Получить первую книгу в списке</button>
 
 <p>Ваши книги:</p>
 <div id="output"></div>
+
+<p>
+<label for="bookId">Введите ID книги:</label>
+<input type="text" id="bookId" name="bookId">
+<button id="searchButton">Найти книгу</button>
+<div id="result"></div>
+</p>
 
 <p>Marsik <3</p>
 </body>
